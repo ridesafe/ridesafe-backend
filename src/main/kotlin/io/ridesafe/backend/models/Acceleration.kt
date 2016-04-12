@@ -1,5 +1,6 @@
 package io.ridesafe.backend.models
 
+import org.springframework.data.annotation.Transient
 import org.springframework.data.cassandra.mapping.*
 import java.io.Serializable
 import javax.validation.constraints.NotNull
@@ -16,10 +17,23 @@ interface Acceleration {
 
 }
 
-data class AccelerationData(override val timestamp: Long,
-                            override val x: Float,
-                            override val y: Float,
-                            override val z: Float) : Acceleration, Rest {
+class AccelerationData : Acceleration, Rest {
+
+    override var timestamp: Long = 0L
+    override var x: Float = 0f
+    override var y: Float = 0f
+    override var z: Float = 0f
+
+    constructor() {
+        // empty
+    }
+
+    constructor(timestamp: Long, x: Float, y: Float, z: Float) {
+        this.timestamp = timestamp
+        this.x = x
+        this.y = y
+        this.z = z
+    }
 
     override fun getPropertiesMap(): Map<String, Any> = mapOf(
             "timestamp" to timestamp,
@@ -31,23 +45,42 @@ data class AccelerationData(override val timestamp: Long,
 }
 
 @Table("acceleration")
-class UserAcceleration(var userId: Long = 0, acceleration: Acceleration) : Acceleration by acceleration {
+class UserAcceleration : Acceleration {
+
+    @Transient
+    override var timestamp: Long = 0L
 
     @PrimaryKey("user_timestamp")
     @NotNull
-    val userTimestamp = UserTimestamp(userId, timestamp)
+    var userTimestamp: UserTimestamp? = null
 
-    @Column("x")
+    @Column
     @NotNull
-    val xAxis = x
+    override var x: Float = 0f
 
-    @Column("y")
+    @Column
     @NotNull
-    val yAxis = y
+    override var y: Float = 0f
 
-    @Column("z")
+    @Column
     @NotNull
-    val zAxis = z
+    override var z: Float = 0f
+
+    constructor() {
+        // empty
+    }
+
+    constructor(userId: Long = -1, acceleration: Acceleration) : this(userId,
+            acceleration.timestamp, acceleration.x, acceleration.y, acceleration.z)
+
+    constructor(userId: Long = -1, timestamp: Long, x: Float, y: Float, z: Float) {
+        this.timestamp = timestamp
+        this.x = x
+        this.y = y
+        this.z = z
+
+        this.userTimestamp = UserTimestamp(userId, timestamp)
+    }
 
 }
 

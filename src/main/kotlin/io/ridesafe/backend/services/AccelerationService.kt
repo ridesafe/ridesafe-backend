@@ -1,9 +1,14 @@
 package io.ridesafe.backend.services
 
 import io.ridesafe.backend.extensions.debug
+import io.ridesafe.backend.extensions.error
+import io.ridesafe.backend.extensions.toUserAcceleration
+import io.ridesafe.backend.extensions.toUserAccelerations
 import io.ridesafe.backend.models.AccelerationData
+import io.ridesafe.backend.models.UserAcceleration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.cassandra.core.CassandraTemplate
+import org.springframework.data.cassandra.core.WriteListener
 import org.springframework.stereotype.Service
 
 /**
@@ -12,15 +17,26 @@ import org.springframework.stereotype.Service
 @Service
 class AccelerationService @Autowired constructor(val cassandraTemplate: CassandraTemplate) {
 
-    fun create(acceleration: AccelerationData): AccelerationData? {
+    private val writeListener = object : WriteListener<UserAcceleration> {
+        override fun onException(x: Exception?) {
+            "an error occured while persisted UserAcceleration object".error(javaClass)
+            x?.printStackTrace()
+        }
 
+        override fun onWriteComplete(entities: MutableCollection<UserAcceleration>?) {
+            "${entities?.size} UserAcceleration entities persisted !"
+        }
 
+    }
+
+    fun create(acceleration: AccelerationData?): AccelerationData? {
+        cassandraTemplate.insertAsynchronously(acceleration?.toUserAcceleration(), writeListener)
         return acceleration
     }
 
-    fun create(accelerations: List<AccelerationData>): List<AccelerationData>? {
-        "Received ${accelerations.size} accelerations to persist".debug(javaClass)
-
+    fun create(accelerations: List<AccelerationData?>?): List<AccelerationData?>? {
+        "Received ${accelerations?.size ?: 0} accelerations to persist".debug(javaClass)
+        cassandraTemplate.insertAsynchronously(accelerations?.toUserAccelerations(), writeListener)
         return accelerations
     }
 
