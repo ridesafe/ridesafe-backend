@@ -1,7 +1,6 @@
 package io.ridesafe.backend.services
 
-import io.ridesafe.backend.extensions.debug
-import io.ridesafe.backend.extensions.error
+import io.ridesafe.backend.extensions.lazyLogger
 import io.ridesafe.backend.extensions.toUserAcceleration
 import io.ridesafe.backend.extensions.toUserAccelerations
 import io.ridesafe.backend.models.AccelerationData
@@ -19,9 +18,11 @@ import org.springframework.stereotype.Service
 class AccelerationService @Autowired constructor(val cassandraTemplate: CassandraTemplate,
                                                  val authenticationService: AuthenticationService) {
 
+    val log by lazyLogger()
+
     private val writeListener = object : WriteListener<UserAcceleration> {
         override fun onException(x: Exception?) {
-            "an error occured while persisted UserAcceleration object".error(javaClass)
+            log.error("an error occured while persisted UserAcceleration object")
             x?.printStackTrace()
         }
 
@@ -37,7 +38,7 @@ class AccelerationService @Autowired constructor(val cassandraTemplate: Cassandr
     }
 
     fun create(accelerations: List<AccelerationData?>?): List<AccelerationData?>? {
-        "Received ${accelerations?.size ?: 0} accelerations to persist".debug(javaClass)
+        log.debug("Received ${accelerations?.size ?: 0} accelerations to persist")
         cassandraTemplate.insertAsynchronously(accelerations?.toUserAccelerations(authenticationService.currentUserId), writeListener)
         return accelerations
     }
