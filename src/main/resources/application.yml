@@ -8,7 +8,7 @@ server:
     compressable-mime-types: "application/json,application/xml,text/html,text/xml,text/plain"
 
 logging:
-  file: /tmp/nm-ad-server.log
+  file: /tmp/rs-backend.log
   level:
     org.springframework.security: INFO
     io.ridesafe.backend: DEBUG
@@ -25,6 +25,6 @@ ridesafe:
 
 nm:
   core:
-    login-url: "http://10.0.0.19/api/v1/login"
-    logout-url: "http://10.0.0.19/api/v1/logout"
-    account-url: "http://10.0.0.19/api/v1/account/authorities"
+    login-url: "http://nm-core/api/v1/login"
+    logout-url: "http://nm-core/api/v1/logout"
+    account-url: "http://nm-core/api/v1/account/authorities"
