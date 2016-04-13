@@ -28,7 +28,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'kotlin'
 
 jar {
-    baseName = 'ridesafe-backend'
+    baseName = 'rs-backend'
     version = '0.1'
 }
 sourceCompatibility = 1.8
