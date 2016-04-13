@@ -1,6 +1,5 @@
 package io.ridesafe.backend.security
 
-import java.io.IOException
 import java.util.regex.Pattern
 import javax.servlet.*
 import javax.servlet.http.HttpServletRequest
@@ -17,12 +16,10 @@ class MyCORSFilter(webHostRegex: String?) : Filter {
         pattern = Pattern.compile(webHostRegex)
     }
 
-    @Throws(ServletException::class)
     override fun init(filterConfig: FilterConfig) {
 
     }
 
-    @Throws(IOException::class, ServletException::class)
     override fun doFilter(req: ServletRequest, res: ServletResponse, chain: FilterChain) {
         val request = req as HttpServletRequest
         val response = res as HttpServletResponse

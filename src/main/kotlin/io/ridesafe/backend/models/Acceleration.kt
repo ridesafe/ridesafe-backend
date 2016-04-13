@@ -50,7 +50,7 @@ class UserAcceleration : Acceleration {
     @Transient
     override var timestamp: Long = 0L
 
-    @PrimaryKey("user_timestamp")
+    @PrimaryKey("user_device_timestamp")
     @NotNull
     var userTimestamp: UserTimestamp? = null
 
@@ -70,16 +70,16 @@ class UserAcceleration : Acceleration {
         // empty
     }
 
-    constructor(userId: Long = -1, acceleration: Acceleration) : this(userId,
+    constructor(userId: Long = -1, deviceId: String, acceleration: Acceleration) : this(userId, deviceId,
             acceleration.timestamp, acceleration.x, acceleration.y, acceleration.z)
 
-    constructor(userId: Long = -1, timestamp: Long, x: Float, y: Float, z: Float) {
+    constructor(userId: Long = -1, deviceId: String, timestamp: Long, x: Float, y: Float, z: Float) {
         this.timestamp = timestamp
         this.x = x
         this.y = y
         this.z = z
 
-        this.userTimestamp = UserTimestamp(userId, timestamp)
+        this.userTimestamp = UserTimestamp(userId, deviceId, timestamp)
     }
 
 }
@@ -87,5 +87,6 @@ class UserAcceleration : Acceleration {
 @PrimaryKeyClass
 data class UserTimestamp(
         @PrimaryKeyColumn(ordinal = 1, type = org.springframework.cassandra.core.PrimaryKeyType.PARTITIONED) val userId: Long,
-        @NotNull val timestamp: Long
+        @PrimaryKeyColumn(ordinal = 2, type = org.springframework.cassandra.core.PrimaryKeyType.CLUSTERED) val deviceId: String,
+        @PrimaryKeyColumn(ordinal = 3, type = org.springframework.cassandra.core.PrimaryKeyType.CLUSTERED) val timestamp: Long
 ) : Serializable

@@ -67,7 +67,7 @@ class AuthenticationService {
             e.printStackTrace()
         }
 
-        if (riderMap?.isEmpty()!!)
+        if (riderMap == null)
             throw UsernameNotFoundException("An error occured and username was not found, is auth service is up and running ?")
 
         return MyUser(riderMap?.get("nickname") as String, "", true, true, true, true,

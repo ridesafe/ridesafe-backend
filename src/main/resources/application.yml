@@ -25,6 +25,6 @@ ridesafe:
 
 nm:
   core:
-    login-url: "http://nm-core/api/v1/login"
-    logout-url: "http://nm-core/api/v1/logout"
-    account-url: "http://nm-core/api/v1/account/authorities"
+    login-url: "http://10.0.0.19/api/v1/login"
+    logout-url: "http://10.0.0.19/api/v1/logout"
+    account-url: "http://10.0.0.19/api/v1/account/authorities"

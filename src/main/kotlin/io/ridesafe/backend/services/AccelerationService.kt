@@ -10,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.cassandra.core.CassandraTemplate
 import org.springframework.data.cassandra.core.WriteListener
 import org.springframework.stereotype.Service
+import javax.servlet.http.HttpServletRequest
 
 /**
  * Created by evoxmusic on 12/04/16.
  */
 @Service
 class AccelerationService @Autowired constructor(val cassandraTemplate: CassandraTemplate,
-                                                 val authenticationService: AuthenticationService) {
+                                                 val authenticationService: AuthenticationService,
+                                                 val req: HttpServletRequest) {
 
     val log by lazyLogger()
 
@@ -32,14 +34,16 @@ class AccelerationService @Autowired constructor(val cassandraTemplate: Cassandr
 
     }
 
+    private fun getDeviceId() = req.getHeader("Device-Id")
+
     fun create(acceleration: AccelerationData?): AccelerationData? {
-        cassandraTemplate.insertAsynchronously(acceleration?.toUserAcceleration(authenticationService.currentUserId), writeListener)
+        cassandraTemplate.insertAsynchronously(acceleration?.toUserAcceleration(authenticationService.currentUserId, getDeviceId()), writeListener)
         return acceleration
     }
 
     fun create(accelerations: List<AccelerationData?>?): List<AccelerationData?>? {
         log.debug("Received ${accelerations?.size ?: 0} accelerations to persist")
-        cassandraTemplate.insertAsynchronously(accelerations?.toUserAccelerations(authenticationService.currentUserId), writeListener)
+        cassandraTemplate.insertAsynchronously(accelerations?.toUserAccelerations(authenticationService.currentUserId, getDeviceId()), writeListener)
         return accelerations
     }
 
