@@ -7,7 +7,6 @@ enum class TripType {
 
     WORK, // en allant au boulot
     RIDE, // en se baladant
-    HOME, // en rentrant à la maison
     OTHER // autre ?
 
 }
