@@ -1,5 +1,6 @@
 package io.ridesafe.backend.services
 
+import io.ridesafe.backend.extensions.collate
 import io.ridesafe.backend.extensions.lazyLogger
 import io.ridesafe.backend.extensions.toUserAcceleration
 import io.ridesafe.backend.extensions.toUserAccelerations
@@ -43,7 +44,15 @@ class AccelerationService @Autowired constructor(val cassandraTemplate: Cassandr
 
     fun create(accelerations: List<AccelerationData?>?): List<AccelerationData?>? {
         log.debug("Received ${accelerations?.size ?: 0} accelerations to persist")
-        cassandraTemplate.insertAsynchronously(accelerations?.toUserAccelerations(authenticationService.currentUserId, getDeviceId()), writeListener)
+
+        if (accelerations == null || accelerations.isEmpty())
+            return emptyList()
+
+        // convert large list to sublist to batch them
+        accelerations.asSequence().collate(100).forEach {
+            cassandraTemplate.insertAsynchronously(it.toUserAccelerations(authenticationService.currentUserId, getDeviceId()), writeListener)
+        }
+
         return accelerations
     }
 
