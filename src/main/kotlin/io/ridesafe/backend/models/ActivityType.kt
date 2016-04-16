@@ -11,6 +11,7 @@ enum class ActivityType {
     SITTING,
     STANDING,
     MOTORBIKING,
-    FALLING
+    FALLING,
+    USING_PHONE
 
 }

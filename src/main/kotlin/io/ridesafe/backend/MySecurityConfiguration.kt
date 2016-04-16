@@ -1,5 +1,6 @@
 package io.ridesafe.backend
 
+import io.ridesafe.backend.filters.DeviceIdHeaderFilter
 import io.ridesafe.backend.security.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.SecurityProperties
@@ -40,6 +41,8 @@ open class MySecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     fun myCORSFilter() = MyCORSFilter(environment?.getProperty("ridesafe.web.host"))
 
+    fun deviceIdHeaderFilter() = DeviceIdHeaderFilter()
+
     fun tokenValidationFilter() = MyTokenValidationFilter(authenticationFailureHandler, authenticationProvider, userDetailsService)
 
     @Bean
@@ -62,6 +65,7 @@ open class MySecurityConfiguration : WebSecurityConfigurerAdapter() {
 
         http.addFilterAfter(tokenValidationFilter(), BasicAuthenticationFilter::class.java)
         http.addFilterBefore(myCORSFilter(), MyTokenValidationFilter::class.java)
+        http.addFilterAfter(deviceIdHeaderFilter(), MyCORSFilter::class.java)
 
         http.authorizeRequests().antMatchers("/api/v1/**").permitAll()
                 .antMatchers("/api/v1/login", "/api/v1/logout").hasAnyRole(Security.USER, Security.ADMIN)
