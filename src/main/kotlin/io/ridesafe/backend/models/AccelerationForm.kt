@@ -1,8 +1,8 @@
 package io.ridesafe.backend.models
 
-import io.ridesafe.models.BikeType
-import io.ridesafe.models.RoadCondition
-import io.ridesafe.models.RoadType
+import io.ridesafe.backend.models.BikeType
+import io.ridesafe.backend.models.RoadCondition
+import io.ridesafe.backend.models.RoadType
 
 /**
  * Created by evoxmusic on 17/04/16.

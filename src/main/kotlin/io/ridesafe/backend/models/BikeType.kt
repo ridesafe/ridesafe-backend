@@ -1,4 +1,4 @@
-package io.ridesafe.models
+package io.ridesafe.backend.models
 
 /**
  * Created by evoxmusic on 10/04/16.

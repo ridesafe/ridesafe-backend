@@ -1,5 +1,6 @@
 package io.ridesafe.backend.services
 
+import io.ridesafe.backend.extensions.collate
 import io.ridesafe.backend.extensions.getDeviceId
 import io.ridesafe.backend.models.AccelerationForm
 import io.ridesafe.backend.security.services.AuthenticationService
@@ -23,8 +24,10 @@ class AccelerationFormService @Autowired constructor(val accelerationService: Ac
             // asynchronously executed
             userAccelerations?.forEach { it.merge(accelerationForm) }
 
-            // update accelerations data
-            accelerationService.update(userAccelerations)
+            // batch update accelerations data (to avoid timeout)
+            userAccelerations?.asSequence()?.collate(100)?.forEach {
+                accelerationService.update(it)
+            }
         }
 
         return accelerationForm

@@ -3,7 +3,7 @@ package io.ridesafe.backend.extensions
 /**
  * Created by evoxmusic on 16/04/16.
  */
-public fun <T> Sequence<T>.collate(n: Int): Sequence<List<T>> {
+fun <T> Sequence<T>.collate(n: Int): Sequence<List<T>> {
     return BatchingSequence(this, n)
 }
 

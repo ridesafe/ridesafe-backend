@@ -1,9 +1,6 @@
 package io.ridesafe.backend.models
 
 import com.datastax.driver.core.Row
-import io.ridesafe.models.BikeType
-import io.ridesafe.models.RoadCondition
-import io.ridesafe.models.RoadType
 import org.springframework.data.annotation.Transient
 import org.springframework.data.cassandra.mapping.*
 import java.io.Serializable
