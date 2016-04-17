@@ -11,6 +11,6 @@ enum class BikeType {
     TOURING,
     SPORT_TOURING,
     CUSTOM,
-    OTHER
+    COLLECTOR
 
 }

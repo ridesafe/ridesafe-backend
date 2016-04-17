@@ -5,6 +5,6 @@ package io.ridesafe.backend.models
  */
 interface Rest {
 
-    fun getPropertiesMap(): Map<String, Any>
+    fun getPropertiesMap(): Map<String, Any?>
 
 }

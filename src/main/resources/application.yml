@@ -12,6 +12,8 @@ logging:
   level:
     org.springframework.security: INFO
     io.ridesafe.backend: DEBUG
+
+spring.jackson.property-naming-strategy: "CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES"
 ---
 
 cassandra:

@@ -7,7 +7,8 @@ enum class RoadType {
 
     PRIVATE_ROAD, // route privée
     TRACK, // chemin
-    ROAD, // route normal
+    ROAD_ONE_LANE, // départemental
+    ROAD_MULTIPLE_LANE, // national
     FREEWAY, // autoroute
     TRACK_RACE // piste
 

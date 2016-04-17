@@ -1,8 +1,9 @@
 package io.ridesafe.backend.models
 
+import com.datastax.driver.core.Row
 import io.ridesafe.models.BikeType
+import io.ridesafe.models.RoadCondition
 import io.ridesafe.models.RoadType
-import io.ridesafe.models.TripType
 import org.springframework.data.annotation.Transient
 import org.springframework.data.cassandra.mapping.*
 import java.io.Serializable
@@ -16,7 +17,7 @@ object AccelerationField {
     val USER_ID = "user_id"
     val DEVICE_ID = "device_id"
     val ACTIVITY_TYPE = "activity_type"
-    val TRIP_TYPE = "trip_type"
+    val ROAD_CONDITION = "road_condition"
     val ROAD_TYPE = "road_type"
     val BIKE_TYPE = "bike_type"
     val X = "x"
@@ -51,6 +52,7 @@ class AccelerationData : Acceleration, Rest {
         this.z = z
     }
 
+    @Transient
     override fun getPropertiesMap(): Map<String, Any> = mapOf(
             "timestamp" to timestamp,
             "x" to x,
@@ -83,40 +85,59 @@ class UserAcceleration : Acceleration {
     override var z: Float = 0f
 
     @Column("activity_type")
-    private var activity: String? = null
+    private var mActivityType: String? = null
 
     @Column("road_type")
-    private var road: String? = null
+    private var mRoadType: String? = null
 
     @Column("bike_type")
-    private var bike: String? = null
+    private var mBikeType: String? = null
 
-    @Column("trip_type")
-    private var trip: String? = null
+    @Column("road_condition")
+    private var mRoadCondition: String? = null
 
     var activityType: ActivityType?
-        @Transient get() = activity?.let { ActivityType.valueOf(it) }
+        @Transient get() = mActivityType?.let { ActivityType.valueOf(it) }
         @Transient set(value) {
-            this.activity = value?.name?.toLowerCase()
+            this.mActivityType = value?.name
         }
 
     var roadType: RoadType?
-        @Transient get() = road?.let { RoadType.valueOf(it) }
+        @Transient get() = mRoadType?.let { RoadType.valueOf(it) }
         @Transient set(value) {
-            this.road = value?.name?.toLowerCase()
+            this.mRoadType = value?.name
         }
 
     var bikeType: BikeType?
-        @Transient get() = bike?.let { BikeType.valueOf(it) }
+        @Transient get() = mBikeType?.let { BikeType.valueOf(it) }
         @Transient set(value) {
-            this.bike = value?.name?.toLowerCase()
+            this.mBikeType = value?.name
         }
 
-    var tripType: TripType?
-        @Transient get() = trip?.let { TripType.valueOf(it) }
+    var roadCondition: RoadCondition?
+        @Transient get() = mRoadCondition?.let { RoadCondition.valueOf(it) }
         @Transient set(value) {
-            this.trip = value?.name?.toLowerCase()
+            this.mRoadCondition = value?.name
         }
+
+    companion object {
+        fun from(row: Row): UserAcceleration {
+            val ua = UserAcceleration(
+                    row.getLong(AccelerationField.USER_ID),
+                    row.getString(AccelerationField.DEVICE_ID),
+                    row.getLong(AccelerationField.TIMESTAMP),
+                    row.getDecimal(AccelerationField.X).toFloat(),
+                    row.getDecimal(AccelerationField.Y).toFloat(),
+                    row.getDecimal(AccelerationField.Z).toFloat())
+
+            ua.activityType = row.getString(AccelerationField.ACTIVITY_TYPE)?.let { ActivityType.valueOf(it.toUpperCase()) }
+            ua.bikeType = row.getString(AccelerationField.BIKE_TYPE)?.let { BikeType.valueOf(it.toUpperCase()) }
+            ua.roadType = row.getString(AccelerationField.ROAD_TYPE)?.let { RoadType.valueOf(it.toUpperCase()) }
+            ua.roadCondition = row.getString(AccelerationField.ROAD_CONDITION)?.let { RoadCondition.valueOf(it.toUpperCase()) }
+
+            return ua
+        }
+    }
 
     constructor() {
         // empty
@@ -132,6 +153,14 @@ class UserAcceleration : Acceleration {
         this.z = z
 
         this.userTimestamp = UserTimestamp(deviceId, userId, timestamp)
+    }
+
+    fun merge(accelerationForm: AccelerationForm): UserAcceleration {
+        this.activityType = accelerationForm.activityType
+        this.bikeType = accelerationForm.bikeType
+        this.roadType = accelerationForm.roadType
+        this.roadCondition = accelerationForm.roadCondition
+        return this
     }
 
 }
