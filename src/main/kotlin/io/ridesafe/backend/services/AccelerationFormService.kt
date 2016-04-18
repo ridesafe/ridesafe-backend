@@ -2,6 +2,7 @@ package io.ridesafe.backend.services
 
 import io.ridesafe.backend.extensions.collate
 import io.ridesafe.backend.extensions.getDeviceId
+import io.ridesafe.backend.extensions.lazyLogger
 import io.ridesafe.backend.models.AccelerationForm
 import io.ridesafe.backend.security.services.AuthenticationService
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,10 +17,16 @@ class AccelerationFormService @Autowired constructor(val accelerationService: Ac
                                                      val authenticationService: AuthenticationService,
                                                      val req: HttpServletRequest) {
 
+    val log by lazyLogger()
+
     fun create(accelerationForm: AccelerationForm): AccelerationForm {
+
+        log.info("New form received from device_id: '${req.getDeviceId()}'")
 
         accelerationService.list(req.getDeviceId(), authenticationService.currentUserId,
                 accelerationForm.startTimestamp!!, accelerationForm.endTimestamp!!) { userAccelerations ->
+
+            log.info("${userAccelerations?.size ?: 0} rows are going to be updated")
 
             // asynchronously executed
             userAccelerations?.forEach { it.merge(accelerationForm) }
