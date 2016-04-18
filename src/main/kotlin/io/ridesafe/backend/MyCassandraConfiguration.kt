@@ -1,5 +1,6 @@
 package io.ridesafe.backend
 
+import com.datastax.driver.core.SocketOptions
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -31,6 +32,7 @@ open class MyCassandraConfiguration {
         val contactPoints = env?.getProperty("cassandra.contact-points")
         cluster.setContactPoints(contactPoints)
         cluster.setPort(env?.getProperty("cassandra.port")?.toInt() ?: 9042)
+        cluster.setSocketOptions(SocketOptions().setReadTimeoutMillis(0))
         return cluster
     }
 
