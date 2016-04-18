@@ -118,7 +118,10 @@ class UserAcceleration : Acceleration {
         }
 
     companion object {
-        fun from(row: Row): UserAcceleration {
+        fun from(row: Row?): UserAcceleration? {
+            if (row == null)
+                return null
+
             val ua = UserAcceleration(
                     row.getLong(AccelerationField.USER_ID),
                     row.getString(AccelerationField.DEVICE_ID),

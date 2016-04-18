@@ -55,4 +55,12 @@ open class MyCassandraConfiguration {
     @Bean
     open fun cassandraTemplate(): CassandraOperations = CassandraTemplate(session().`object`)
 
+    @Bean
+    open fun myClusterConfiguration(): Any? {
+        // set fetch size higher than the default (5000) non editable value
+        cluster().`object`.configuration.queryOptions.fetchSize = 100000000
+        return null
+    }
+
+
 }

@@ -56,7 +56,7 @@ class AccelerationService @Autowired constructor(val cassandraTemplate: Cassandr
         return accelerations
     }
 
-    fun list(deviceId: String, userId: Long = -1, startTimestamp: Long, endTimestamp: Long, cls: (List<UserAcceleration>?) -> Unit) {
+    fun list(deviceId: String, userId: Long = -1, startTimestamp: Long, endTimestamp: Long, cls: (List<UserAcceleration?>?) -> Unit) {
         cassandraTemplate.queryAsynchronously("SELECT * FROM $keyspace.acceleration WHERE " +
                 "${AccelerationField.DEVICE_ID}='$deviceId' AND " +
                 "${AccelerationField.USER_ID}=$userId AND " +
@@ -68,7 +68,7 @@ class AccelerationService @Autowired constructor(val cassandraTemplate: Cassandr
                 })
     }
 
-    fun update(userAccelerations: List<UserAcceleration>?): List<UserAcceleration>? {
+    fun update(userAccelerations: List<UserAcceleration?>?): List<UserAcceleration?>? {
         cassandraTemplate.updateAsynchronously(userAccelerations, writeListener)
         return userAccelerations
     }

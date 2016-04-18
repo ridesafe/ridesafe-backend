@@ -29,12 +29,10 @@ class AccelerationFormService @Autowired constructor(val accelerationService: Ac
             log.info("${userAccelerations?.size ?: 0} rows are going to be updated")
 
             // asynchronously executed
-            userAccelerations?.forEach { it.merge(accelerationForm) }
+            userAccelerations?.forEach { it?.merge(accelerationForm) }
 
             // batch update accelerations data (to avoid timeout)
-            userAccelerations?.asSequence()?.collate(100)?.forEach {
-                accelerationService.update(it)
-            }
+            userAccelerations?.asSequence()?.collate(100)?.forEach { accelerationService.update(it) }
         }
 
         return accelerationForm
