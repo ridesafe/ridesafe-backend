@@ -5,14 +5,14 @@ package io.ridesafe.backend.models
  */
 enum class ActivityType {
 
-    SLEEPING,
+    MOTORBIKING,
+    MOTORBIKE_FALLING,
+    MOTORBIKE_PUSHING,
     WALKING,
     JOGGING,
     SITTING,
     STANDING,
-    MOTORBIKING,
-    MOTORBIKE_FALLING,
-    MOTORBIKE_PUSHING,
+    SLEEPING,
     USING_PHONE
 
 }
