@@ -33,7 +33,7 @@ class AccelerationService @Autowired constructor(val cassandraTemplate: Cassandr
         }
 
         override fun onWriteComplete(entities: MutableCollection<UserAcceleration>?) {
-            "${entities?.size} 'UserAcceleration' entities persisted !"
+            log.info("${entities?.size} 'UserAcceleration' entities persisted !")
         }
     }
 
@@ -43,7 +43,7 @@ class AccelerationService @Autowired constructor(val cassandraTemplate: Cassandr
     }
 
     fun create(accelerations: List<AccelerationData?>?): List<AccelerationData?>? {
-        log.debug("Received ${accelerations?.size ?: 0} accelerations to persist")
+        log.info("Received ${accelerations?.size ?: 0} accelerations to persist")
 
         if (accelerations == null || accelerations.isEmpty())
             return emptyList()
