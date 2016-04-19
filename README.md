@@ -29,7 +29,7 @@ curl -X POST --data '{"timestamp": 1234567890, "x": 0.323149, "y": -2.5231, "z":
 curl -X POST --data '[{"timestamp": 1234567890, "x": 0.323149, "y": -2.5231, "z": 9.28387237}, ...]' -H "Device-Id: your_device_uuid" -H "Content-type: application/json" http://localhost:8093/api/v1/accelerations
 ```
 
-Basically, you need to generate a unique device id and put it as request header to store data correctly into database.
+Basically, you need to generate an unique device id (mandatory) and put it as request header to store data correctly into database.
 ```
 ... -H "Device-Id: your_device_uuid" ...
 ```
@@ -111,7 +111,7 @@ RideSafe is used into our [Nousmotards](https://play.google.com/store/apps/detai
 
 ## Who are we ?
 RideSafe has been launched by [Nousmotards](https://www.nousmotards.com).
-**Nousmotards** is a service platform for bikers, created by [3 engineers and bikers](http://blog.nousmotards.com/2015/04/24/ouverture-du-blog-nousmotards/):
+It is a service platform for bikers, created by [3 engineers and bikers](http://blog.nousmotards.com/2015/04/24/ouverture-du-blog-nousmotards/):
 * [Romaric Philogène](https://fr.linkedin.com/in/romaricphilogene)
 * [Rémi Demol](https://www.linkedin.com/in/demolremi/fr)
 * [Pierre Mavro](https://fr.linkedin.com/in/pmavro/fr)
@@ -122,6 +122,9 @@ Nousmotards app is available on Mobile ([Android](https://play.google.com/store/
 Contact us at [contact@ridesafe.io](mailto:contact@ridesafe.io) or [contact@nousmotards.com](mailto:contact@nousmotards.com)
 
 ## Partners
+* [FFMC - Fédération Française des Motards en Colères](http://ffmc.fr/)
+* [Motomag](http://www.motomag.com/)
+
 We are looking for worldwide partners specialised in motorbike and/or technology.
 
 ## More
