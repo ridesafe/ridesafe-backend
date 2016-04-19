@@ -53,21 +53,6 @@ Prerequisites:
 * [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Cassandra database](http://cassandra.apache.org/download/)
 
-Build app
-```
-# Clone this repository
-cd ridesafe-backend
-
-# Build app
-chmod +x gradlew
-./gradlew build
-
-# Run app
-java -jar build/libs/rs-backend-0.1.jar
-
-# it's now live on http://localhost:8093
-```
-
 Cassandra schema
 ```SQL
 CREATE KEYSPACE ridesafe WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
@@ -92,6 +77,29 @@ CREATE INDEX activity_type_idx ON acceleration (activity_type);
 CREATE INDEX bike_type_idx ON acceleration (bike_type);
 CREATE INDEX road_type_idx ON acceleration (road_type);
 CREATE INDEX road_condition_idx ON acceleration (road_condition);
+```
+
+Build app
+```
+# Clone this repository
+cd ridesafe-backend
+
+# Build app
+chmod +x gradlew
+./gradlew build
+
+# Run app
+java -jar build/libs/rs-backend-0.1.jar
+
+# it's now live on http://localhost:8093
+```
+
+You can configure application
+```
+cd ridesafe-backend/src/main/resources
+vi application.yml
+
+# then you have to rebuild the app
 ```
 
 ## Our open backend
