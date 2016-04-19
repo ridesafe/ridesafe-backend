@@ -7,15 +7,15 @@ Our smartphones have accelerometers to measure acceleration forces of individual
 The self learning algorithms are able to improve the detection of a fall by analysing such data.
 
 Go to:
-* [RideSafe Backend](#RideSafe Backend)
-* [How it works](#How it works)
-* [Running locally](#Running locally)
-* [Our open backend](#Our open backend)
-* [Contribute](#Contribute)
-* [Demo](#Demo)
-* [Who are we](#Who are we)
-* [Partners](#Partners)
-* [More](#More)
+* [RideSafe Backend](#ridesafe-backend)
+* [How it works](#how-it-works)
+* [Running locally](#running-locally)
+* [Our open backend](#our-open-backend)
+* [Contribute](#contribute)
+* [Demo](#demo)
+* [Who are we](#who-are-we)
+* [Partners](#partners)
+* [More](#more)
 
 ## RideSafe Backend
 The RideSafe backend is in charge of receiving data from clients. It is [Spring Boot](http://projects.spring.io/spring-boot/) + [Kotlin](https://kotlinlang.org/) based application backed by [Cassandra](http://cassandra.apache.org/) database
