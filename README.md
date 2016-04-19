@@ -128,6 +128,6 @@ Contact us at [contact@ridesafe.io](mailto:contact@ridesafe.io) or [contact@nous
 We are looking for worldwide partners specialised in motorbike and/or technology.
 
 ## More
-The project is based on the work of [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called machine learning.
+The project is based on the work of [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
 The data and algorithms are available under the Apache license, this means that the changes and improvements made will be communicated to the community.
 Commercial use is unrestricted.
