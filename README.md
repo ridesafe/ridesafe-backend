@@ -16,6 +16,7 @@ Go to:
 * [Who are we](#who-are-we)
 * [Partners](#partners)
 * [More](#more)
+* [Contact](#contact)
 
 ## RideSafe Backend
 The RideSafe backend is in charge of receiving data from clients. It is [Spring Boot](http://projects.spring.io/spring-boot/) + [Kotlin](https://kotlinlang.org/) based application backed by [Cassandra](http://cassandra.apache.org/) database
@@ -119,8 +120,6 @@ It is a service platform for bikers, created by [3 engineers and bikers](http://
 We are creating a set of services tailored exclusively to the world of motorcycling!
 Nousmotards app is available on Mobile ([Android](https://play.google.com/store/apps/details?id=com.nousmotards.android), iOS) and on your [browser](https://www.nousmotards.com).
 
-Contact us at [contact@ridesafe.io](mailto:contact@ridesafe.io) or [contact@nousmotards.com](mailto:contact@nousmotards.com)
-
 ## Partners
 * [FFMC - Fédération Française des Motards en Colères](http://ffmc.fr/)
 * [Motomag](http://www.motomag.com/)
@@ -128,6 +127,11 @@ Contact us at [contact@ridesafe.io](mailto:contact@ridesafe.io) or [contact@nous
 We are looking for worldwide partners specialised in motorbike and/or technology.
 
 ## More
-The project is based on the work of [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
+The "Activity Recognition" project is based on the work of [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
 The data and algorithms are available under the Apache license, this means that the changes and improvements made will be communicated to the community.
 Commercial use is unrestricted.
+
+## Contact
+
+Contact us at [contact@ridesafe.io](mailto:contact@ridesafe.io) or [contact@nousmotards.com](mailto:contact@nousmotards.com)
+Follow us: [Twitter](https://twitter.com/Nousmotards) [Facebook](https://www.facebook.com/nousmotardsapp)
