@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ridesafe/project/gh-pages/ridesafe_256.jpg" ></center>
+<p align="center"><img src="https://raw.githubusercontent.com/ridesafe/project/gh-pages/ridesafe_256.jpg"></p>
 
 ## RideSafe
 [RideSafe](http://www.ridesafe.io) is an open source project which detects bikers' falls. This is possible thanks to intelligent algorithms and data collection.
@@ -36,7 +36,7 @@ Basically, you need to generate an unique device id (mandatory) and put it as re
 ```
 
 To make data storing valuable, sender can categorize it's activity to make predictive model more accurate.
-```
+```bash
 curl -X POST --data '{"start_timestamp": 1234567890, "end_timestamp": "2334567890", "activity_type": "MOTORBIKING", "bike_type": "ROADSTER", "road_type": "CITY", "road_condition": "GOOD"}' -H "Device-Id: your_device_uuid" -H "Content-type: application/json" http://localhost:8093/api/v1/acceleration/form
 ```
 
@@ -80,7 +80,7 @@ CREATE INDEX road_condition_idx ON acceleration (road_condition);
 ```
 
 Build app
-```
+```bash
 # Clone this repository
 cd ridesafe-backend
 
@@ -95,7 +95,7 @@ java -jar build/libs/rs-backend-0.1.jar
 ```
 
 You can configure application
-```
+```bash
 cd ridesafe-backend/src/main/resources
 vi application.yml
 
@@ -136,10 +136,12 @@ We are looking for worldwide partners specialised in motorbike and/or technology
 
 ## More
 The "Activity Recognition" project is based on the work of [Amira Lakhal](https://github.com/MiraLak), which detects one type of activity from the accelerometer integrated in smartphones and a self-learning algorithm called [machine learning](https://en.wikipedia.org/wiki/Machine_learning).
+
 The data and algorithms are available under the Apache license, this means that the changes and improvements made will be communicated to the community.
 Commercial use is unrestricted.
 
 ## Contact
 
 Contact us at [contact@ridesafe.io](mailto:contact@ridesafe.io) or [contact@nousmotards.com](mailto:contact@nousmotards.com)
+
 Follow us: [Twitter](https://twitter.com/Nousmotards) [Facebook](https://www.facebook.com/nousmotardsapp)
