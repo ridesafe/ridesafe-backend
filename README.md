@@ -1,5 +1,7 @@
 <p align="center"><img src="https://raw.githubusercontent.com/ridesafe/project/gh-pages/ridesafe_256.jpg"></p>
 
+[![Build Status](https://travis-ci.org/ridesafe/ridesafe-backend.svg)](https://travis-ci.org/ridesafe/ridesafe-backend)
+
 ## RideSafe
 [RideSafe](http://www.ridesafe.io) is an open source project which detects bikers' falls. This is possible thanks to intelligent algorithms and data collection.
 
