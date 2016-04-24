@@ -17,7 +17,7 @@ spring.jackson.property-naming-strategy: "CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCO
 ---
 
 cassandra:
-  contact-points: "10.200.0.1"
+  contact-points: "cassandra"
   port: 9042
   keyspace: "ridesafe"
 
