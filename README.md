@@ -131,9 +131,6 @@ We are creating a set of services tailored exclusively to the world of motorcycl
 Nousmotards app is available on Mobile ([Android](https://play.google.com/store/apps/details?id=com.nousmotards.android), iOS) and on your [browser](https://www.nousmotards.com).
 
 ## Partners
-* [FFMC - Fédération Française des Motards en Colère](http://ffmc.fr/)
-* [Motomag](http://www.motomag.com/)
-
 We are looking for worldwide partners specialised in motorbike and/or technology.
 
 ## More

@@ -101,7 +101,7 @@ class UserAcceleration : Acceleration {
     override var z: Float = 0f
 
     @Column("activity_type")
-    private var mActivityType: String? = null
+    private var mActivityType: String? = ""
 
     @Column("road_type")
     private var mRoadType: String? = null
@@ -113,7 +113,12 @@ class UserAcceleration : Acceleration {
     private var mRoadCondition: String? = null
 
     var activityType: ActivityType?
-        @Transient get() = mActivityType?.let { ActivityType.valueOf(it) }
+        @Transient get() {
+            if (mActivityType.isNullOrBlank())
+                return null
+
+            return ActivityType.valueOf(mActivityType!!)
+        }
         @Transient set(value) {
             this.mActivityType = value?.name
         }
