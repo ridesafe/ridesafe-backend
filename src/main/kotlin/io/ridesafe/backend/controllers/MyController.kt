@@ -19,29 +19,19 @@
 
 package io.ridesafe.backend.controllers
 
-import io.ridesafe.backend.models.AccelerationData
-import io.ridesafe.backend.services.AccelerationService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
+import javax.servlet.http.HttpServletResponse
 
 /**
- * Created by evoxmusic on 12/04/16.
+ * Created by evoxmusic on 20/05/16.
  */
-@RestController
-@RequestMapping("/api/v1/accelerations")
-class AccelerationsController : MyController() {
+open class MyController {
 
     @Autowired
-    var accelerationService: AccelerationService? = null
+    var res: HttpServletResponse? = null
 
-    @RequestMapping(method = arrayOf(RequestMethod.POST))
-    fun save(@RequestBody @Valid accelerations: List<AccelerationData>): Map<String, String> {
-        accelerationService?.create(accelerations)
-        return mapOf("result" to "ok")
-    }
+    val OK = 200
+    val NO_CONTENT = 204
+    val CREATED = 201
 
 }

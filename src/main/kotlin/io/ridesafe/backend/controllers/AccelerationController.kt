@@ -33,9 +33,15 @@ import javax.validation.Valid
  */
 @RestController
 @RequestMapping("/api/v1/acceleration")
-class AccelerationController @Autowired constructor(val accelerationService: AccelerationService) {
+class AccelerationController : MyController() {
+
+    @Autowired
+    var accelerationService: AccelerationService? = null
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
-    fun save(@RequestBody @Valid acceleration: AccelerationData) = accelerationService.create(acceleration)?.getPropertiesMap()
+    fun save(@RequestBody @Valid acceleration: AccelerationData): Map<String, Any?> {
+        res?.status = OK
+        return accelerationService?.create(acceleration)?.getPropertiesMap() ?: mapOf()
+    }
 
 }
