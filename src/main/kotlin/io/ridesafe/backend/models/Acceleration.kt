@@ -154,7 +154,11 @@ class UserAcceleration : Acceleration {
                     row.getDecimal(AccelerationField.Y).toFloat(),
                     row.getDecimal(AccelerationField.Z).toFloat())
 
-            ua.activityType = row.getString(AccelerationField.ACTIVITY_TYPE)?.let { ActivityType.valueOf(it.toUpperCase()) }
+            val activityTypeStr = row.getString(AccelerationField.ACTIVITY_TYPE)
+            if (!activityTypeStr.isNullOrBlank()) {
+                ua.activityType = ActivityType.valueOf(activityTypeStr.toUpperCase())
+            }
+
             ua.bikeType = row.getString(AccelerationField.BIKE_TYPE)?.let { BikeType.valueOf(it.toUpperCase()) }
             ua.roadType = row.getString(AccelerationField.ROAD_TYPE)?.let { RoadType.valueOf(it.toUpperCase()) }
             ua.roadCondition = row.getString(AccelerationField.ROAD_CONDITION)?.let { RoadCondition.valueOf(it.toUpperCase()) }
