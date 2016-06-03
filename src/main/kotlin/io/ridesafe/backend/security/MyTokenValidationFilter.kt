@@ -55,7 +55,7 @@ class MyTokenValidationFilter(private val authenticationFailureHandler: Authenti
             return
         }
 
-        val accessToken = MyAccessToken(userDetails, userDetails?.authorities, tokenValue, null, null)
+        val accessToken = MyAccessToken(userDetails, userDetails?.authorities!!, tokenValue, null, null)
         SecurityContextHolder.getContext().authentication = accessToken
 
         logger.debug("user: '${userDetails?.username}' authenticated and having following authorities: '${accessToken.authorities}'")
