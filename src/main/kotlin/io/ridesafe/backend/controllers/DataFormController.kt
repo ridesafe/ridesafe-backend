@@ -19,8 +19,8 @@
 
 package io.ridesafe.backend.controllers
 
-import io.ridesafe.backend.models.AccelerationData
-import io.ridesafe.backend.services.AccelerationService
+import io.ridesafe.backend.models.DataForm
+import io.ridesafe.backend.services.DataFormService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -29,19 +29,19 @@ import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 /**
- * Created by evoxmusic on 12/04/16.
+ * Created by evoxmusic on 17/04/16.
  */
 @RestController
-@RequestMapping("/api/v1/accelerations")
-class AccelerationsController : MyController() {
+@RequestMapping("/api/v1/data/form")
+class DataFormController : MyController() {
 
     @Autowired
-    var accelerationService: AccelerationService? = null
+    var dataFormService: DataFormService? = null
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
-    fun save(@RequestBody @Valid accelerations: List<AccelerationData>): Map<String, String> {
-        accelerationService?.create(accelerations)
-        return mapOf("result" to "ok")
+    fun save(@RequestBody @Valid dataForm: DataForm): Map<String, Any?> {
+        res?.status = CREATED
+        return dataFormService?.create(dataForm)?.getPropertiesMap() ?: mapOf()
     }
 
 }

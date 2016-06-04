@@ -2,13 +2,16 @@ CREATE KEYSPACE ridesafe WITH REPLICATION = { 'class' : 'SimpleStrategy', 'repli
 
 use ridesafe;
 
-CREATE COLUMNFAMILY acceleration (
+CREATE COLUMNFAMILY data (
 device_id text,
 user_id bigint,
 "timestamp" bigint,
-x decimal,
-y decimal,
-z decimal,
+acc_x decimal,
+acc_y decimal,
+acc_z decimal,
+gyr_x decimal,
+gyr_y decimal,
+gyr_z decimal,
 activity_type text,
 bike_type text,
 road_type text,
@@ -16,7 +19,7 @@ road_condition text,
 PRIMARY KEY ((device_id, user_id), "timestamp")
 );
 
-CREATE INDEX activity_type_idx ON acceleration (activity_type);
-CREATE INDEX bike_type_idx ON acceleration (bike_type);
-CREATE INDEX road_type_idx ON acceleration (road_type);
-CREATE INDEX road_condition_idx ON acceleration (road_condition);
+CREATE INDEX data_activity_type_idx ON data (activity_type);
+CREATE INDEX data_bike_type_idx ON data (bike_type);
+CREATE INDEX data_road_type_idx ON data (road_type);
+CREATE INDEX data_road_condition_idx ON data (road_condition);

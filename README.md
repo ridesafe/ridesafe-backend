@@ -5,7 +5,7 @@
 ## RideSafe
 [RideSafe](http://www.ridesafe.io) is an open source project which detects bikers' falls. This is possible thanks to intelligent algorithms and data collection.
 
-Our smartphones have accelerometers to measure acceleration forces of individuals, these data can be used to analyse the behaviour: when walking, running, biking and even falling !
+Our smartphones have accelerometers to measure acceleration forces and gyroscope to measure rotation forces of individuals, these data can be used to analyse the behaviour: when walking, running, biking and even falling !
 The self learning algorithms are able to improve the detection of a fall by analysing such data.
 
 Go to:
@@ -28,8 +28,8 @@ This is a simple service that only receipts Acceleration data and store it into 
 
 Examples
 ```bash
-curl -X POST --data '{"timestamp": 1234567890, "x": 0.323149, "y": -2.5231, "z": 9.28387237}' -H "Device-Id: your_device_uuid" -H "Content-type: application/json" http://localhost:8093/api/v1/acceleration
-curl -X POST --data '[{"timestamp": 1234567890, "x": 0.323149, "y": -2.5231, "z": 9.28387237}, ...]' -H "Device-Id: your_device_uuid" -H "Content-type: application/json" http://localhost:8093/api/v1/accelerations
+curl -X POST --data '{"timestamp": 1234567890, "acc_x": 0.323149, "acc_y": -2.5231, "acc_z": 9.28387237, "gyr_x": 917, "gyr_y": -46, "gyr_z": -148}' -H "Device-Id: your_device_uuid" -H "Content-type: application/json" http://localhost:8093/api/v1/acceleration
+curl -X POST --data '[{"timestamp": 1234567890, "acc_x": 0.323149, "acc_y": -2.5231, "acc_z": 9.28387237, "gyr_x": 917, "gyr_y": -46, "gyr_z": -148}, ...]' -H "Device-Id: your_device_uuid" -H "Content-type: application/json" http://localhost:8093/api/v1/accelerations
 ```
 
 Basically, you need to generate an unique device id (mandatory) and put it as request header to store data correctly into database.
@@ -61,24 +61,27 @@ CREATE KEYSPACE ridesafe WITH REPLICATION = { 'class' : 'SimpleStrategy', 'repli
 
 use ridesafe;
 
-CREATE COLUMNFAMILY acceleration (
-  device_id text,
-  user_id bigint,
-  "timestamp" bigint,
-  x decimal,
-  y decimal,
-  z decimal,
-  activity_type text,
-  bike_type text,
-  road_type text,
-  road_condition text,
-  PRIMARY KEY ((device_id, user_id), "timestamp")
+CREATE COLUMNFAMILY data (
+device_id text,
+user_id bigint,
+"timestamp" bigint,
+acc_x decimal,
+acc_y decimal,
+acc_z decimal,
+gyr_x decimal,
+gyr_y decimal,
+gyr_z decimal,
+activity_type text,
+bike_type text,
+road_type text,
+road_condition text,
+PRIMARY KEY ((device_id, user_id), "timestamp")
 );
 
-CREATE INDEX activity_type_idx ON acceleration (activity_type);
-CREATE INDEX bike_type_idx ON acceleration (bike_type);
-CREATE INDEX road_type_idx ON acceleration (road_type);
-CREATE INDEX road_condition_idx ON acceleration (road_condition);
+CREATE INDEX data_activity_type_idx ON data (activity_type);
+CREATE INDEX data_bike_type_idx ON data (bike_type);
+CREATE INDEX data_road_type_idx ON data (road_type);
+CREATE INDEX data_road_condition_idx ON data (road_condition);
 ```
 
 Build app

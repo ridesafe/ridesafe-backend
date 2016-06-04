@@ -46,8 +46,8 @@ class MyAuthenticationProvider : AuthenticationProvider {
             if (userDetails?.isEnabled?.not()!!)
                 return null
 
-            authenticationResult = MyAccessToken(userDetails, userDetails?.authorities, authenticationRequest.accessToken, null, null)
-            logger.debug("Authentication result for '${userDetails?.username}': ${authenticationResult?.isAuthenticated}")
+            authenticationResult = MyAccessToken(userDetails, userDetails!!.authorities, authenticationRequest.accessToken, null, null)
+            logger.debug("Authentication result for '${userDetails.username}': ${authenticationResult.isAuthenticated}")
         }
 
 

@@ -22,7 +22,7 @@ package io.ridesafe.backend.models
 /**
  * Created by evoxmusic on 17/04/16.
  */
-class AccelerationForm : Rest {
+class DataForm : Rest {
 
     var activityType: ActivityType? = null
     var startTimestamp: Long? = null

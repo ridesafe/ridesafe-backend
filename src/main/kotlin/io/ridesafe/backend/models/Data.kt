@@ -28,7 +28,7 @@ import javax.validation.constraints.NotNull
 /**
  * Created by evoxmusic on 12/04/16.
  */
-object AccelerationField {
+object DataField {
     val TIMESTAMP = "timestamp"
     val USER_ID = "user_id"
     val DEVICE_ID = "device_id"
@@ -36,26 +36,35 @@ object AccelerationField {
     val ROAD_CONDITION = "road_condition"
     val ROAD_TYPE = "road_type"
     val BIKE_TYPE = "bike_type"
-    val X = "x"
-    val Y = "y"
-    val Z = "z"
+    val accX = "acc_x"
+    val accY = "acc_y"
+    val accZ = "acc_z"
+    val gyrX = "gyr_x"
+    val gyrY = "gyr_y"
+    val gyrZ = "gyr_z"
 }
 
-interface Acceleration {
+interface Data {
 
     val timestamp: Long
-    val x: Float
-    val y: Float
-    val z: Float
+    val accX: Float
+    val accY: Float
+    val accZ: Float
+    val gyrX: Float
+    val gyrY: Float
+    val gyrZ: Float
 
 }
 
-class AccelerationData : Acceleration, Rest {
+class ProvidedData : Data, Rest {
 
     override var timestamp: Long = 0L
-    override var x: Float = 0f
-    override var y: Float = 0f
-    override var z: Float = 0f
+    override var accX: Float = 0f
+    override var accY: Float = 0f
+    override var accZ: Float = 0f
+    override var gyrX: Float = 0f
+    override var gyrY: Float = 0f
+    override var gyrZ: Float = 0f
 
     constructor() {
         // empty
@@ -63,23 +72,26 @@ class AccelerationData : Acceleration, Rest {
 
     constructor(timestamp: Long, x: Float, y: Float, z: Float) {
         this.timestamp = timestamp
-        this.x = x
-        this.y = y
-        this.z = z
+        this.accX = x
+        this.accY = y
+        this.accZ = z
     }
 
     @Transient
     override fun getPropertiesMap(): Map<String, Any> = mapOf(
             "timestamp" to timestamp,
-            "x" to x,
-            "y" to y,
-            "z" to z
+            "acc_x" to accX,
+            "acc_y" to accY,
+            "acc_z" to accZ,
+            "gyr_x" to gyrX,
+            "gyr_y" to gyrY,
+            "gyr_z" to gyrZ
     )
 
 }
 
-@Table("acceleration")
-class UserAcceleration : Acceleration {
+@Table("data")
+class UserData : Data {
 
     @Transient
     override var timestamp: Long = 0L
@@ -90,15 +102,27 @@ class UserAcceleration : Acceleration {
 
     @Column
     @NotNull
-    override var x: Float = 0f
+    override var accX: Float = 0f
 
     @Column
     @NotNull
-    override var y: Float = 0f
+    override var accY: Float = 0f
 
     @Column
     @NotNull
-    override var z: Float = 0f
+    override var accZ: Float = 0f
+
+    @Column
+    @NotNull
+    override var gyrX: Float = 0f
+
+    @Column
+    @NotNull
+    override var gyrY: Float = 0f
+
+    @Column
+    @NotNull
+    override var gyrZ: Float = 0f
 
     @Column("activity_type")
     private var mActivityType: String? = ""
@@ -142,26 +166,29 @@ class UserAcceleration : Acceleration {
         }
 
     companion object {
-        fun from(row: Row?): UserAcceleration? {
+        fun from(row: Row?): UserData? {
             if (row == null)
                 return null
 
-            val ua = UserAcceleration(
-                    row.getLong(AccelerationField.USER_ID),
-                    row.getString(AccelerationField.DEVICE_ID),
-                    row.getLong(AccelerationField.TIMESTAMP),
-                    row.getDecimal(AccelerationField.X).toFloat(),
-                    row.getDecimal(AccelerationField.Y).toFloat(),
-                    row.getDecimal(AccelerationField.Z).toFloat())
+            val ua = UserData(
+                    row.getLong(DataField.USER_ID),
+                    row.getString(DataField.DEVICE_ID),
+                    row.getLong(DataField.TIMESTAMP),
+                    row.getDecimal(DataField.accX).toFloat(),
+                    row.getDecimal(DataField.accY).toFloat(),
+                    row.getDecimal(DataField.accZ).toFloat(),
+                    row.getDecimal(DataField.gyrX).toFloat(),
+                    row.getDecimal(DataField.gyrY).toFloat(),
+                    row.getDecimal(DataField.gyrZ).toFloat())
 
-            val activityTypeStr = row.getString(AccelerationField.ACTIVITY_TYPE)
+            val activityTypeStr = row.getString(DataField.ACTIVITY_TYPE)
             if (!activityTypeStr.isNullOrBlank()) {
                 ua.activityType = ActivityType.valueOf(activityTypeStr.toUpperCase())
             }
 
-            ua.bikeType = row.getString(AccelerationField.BIKE_TYPE)?.let { BikeType.valueOf(it.toUpperCase()) }
-            ua.roadType = row.getString(AccelerationField.ROAD_TYPE)?.let { RoadType.valueOf(it.toUpperCase()) }
-            ua.roadCondition = row.getString(AccelerationField.ROAD_CONDITION)?.let { RoadCondition.valueOf(it.toUpperCase()) }
+            ua.bikeType = row.getString(DataField.BIKE_TYPE)?.let { BikeType.valueOf(it.toUpperCase()) }
+            ua.roadType = row.getString(DataField.ROAD_TYPE)?.let { RoadType.valueOf(it.toUpperCase()) }
+            ua.roadCondition = row.getString(DataField.ROAD_CONDITION)?.let { RoadCondition.valueOf(it.toUpperCase()) }
 
             return ua
         }
@@ -171,19 +198,26 @@ class UserAcceleration : Acceleration {
         // empty
     }
 
-    constructor(userId: Long = -1, deviceId: String, acceleration: Acceleration) : this(userId, deviceId,
-            acceleration.timestamp, acceleration.x, acceleration.y, acceleration.z)
+    constructor(userId: Long = -1, deviceId: String, acceleration: Data) : this(userId, deviceId, acceleration.timestamp,
+            acceleration.accX, acceleration.accY, acceleration.accZ,
+            acceleration.gyrX, acceleration.gyrY, acceleration.gyrZ)
 
-    constructor(userId: Long = -1, deviceId: String, timestamp: Long, x: Float, y: Float, z: Float) {
+    constructor(userId: Long = -1, deviceId: String, timestamp: Long,
+                accX: Float, accY: Float, accZ: Float,
+                gyrX: Float, gyrY: Float, gyrZ: Float) {
+
         this.timestamp = timestamp
-        this.x = x
-        this.y = y
-        this.z = z
+        this.accX = accX
+        this.accY = accY
+        this.accZ = accZ
+        this.gyrX = gyrX
+        this.gyrY = gyrY
+        this.gyrZ = gyrZ
 
         this.userTimestamp = UserTimestamp(deviceId, userId, timestamp)
     }
 
-    fun merge(accelerationForm: AccelerationForm): UserAcceleration {
+    fun merge(accelerationForm: DataForm): UserData {
         this.activityType = accelerationForm.activityType
         this.bikeType = accelerationForm.bikeType
         this.roadType = accelerationForm.roadType
