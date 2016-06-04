@@ -5,7 +5,7 @@
 ## RideSafe
 [RideSafe](http://www.ridesafe.io) is an open source project which detects bikers' falls. This is possible thanks to intelligent algorithms and data collection.
 
-Our smartphones have accelerometers to measure acceleration forces and gyroscope to measure rotation forces of individuals, these data can be used to analyse the behaviour: when walking, running, biking and even falling !
+Our smartphones have accelerometers to measure acceleration and gyroscope forces of individuals, these data can be used to analyse the behaviour: when walking, running, biking and even falling !
 The self learning algorithms are able to improve the detection of a fall by analysing such data.
 
 Go to:
