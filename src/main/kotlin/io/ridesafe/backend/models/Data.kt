@@ -100,28 +100,28 @@ class UserData : Data {
     @NotNull
     var userTimestamp: UserTimestamp? = null
 
-    @Column
     @NotNull
+    @Column("acc_x")
     override var accX: Float = 0f
 
-    @Column
     @NotNull
+    @Column("acc_y")
     override var accY: Float = 0f
 
-    @Column
     @NotNull
+    @Column("acc_z")
     override var accZ: Float = 0f
 
-    @Column
     @NotNull
+    @Column("gyr_x")
     override var gyrX: Float = 0f
 
-    @Column
     @NotNull
+    @Column("gyr_y")
     override var gyrY: Float = 0f
 
-    @Column
     @NotNull
+    @Column("gyr_z")
     override var gyrZ: Float = 0f
 
     @Column("activity_type")
@@ -198,9 +198,9 @@ class UserData : Data {
         // empty
     }
 
-    constructor(userId: Long = -1, deviceId: String, acceleration: Data) : this(userId, deviceId, acceleration.timestamp,
-            acceleration.accX, acceleration.accY, acceleration.accZ,
-            acceleration.gyrX, acceleration.gyrY, acceleration.gyrZ)
+    constructor(userId: Long = -1, deviceId: String, data: Data) : this(userId, deviceId, data.timestamp,
+            data.accX, data.accY, data.accZ,
+            data.gyrX, data.gyrY, data.gyrZ)
 
     constructor(userId: Long = -1, deviceId: String, timestamp: Long,
                 accX: Float, accY: Float, accZ: Float,

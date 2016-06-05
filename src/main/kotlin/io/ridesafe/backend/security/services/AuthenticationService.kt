@@ -49,7 +49,13 @@ class AuthenticationService {
     private val restTemplate = RestTemplate()
 
     val currentMyUser: MyUser?
-        get() = SecurityContextHolder.getContext().authentication.principal as MyUser
+        get() {
+            if (SecurityContextHolder.getContext().authentication.principal is MyUser) {
+                return SecurityContextHolder.getContext().authentication.principal as MyUser
+            } else {
+                return null
+            }
+        }
 
     val currentUserId: Long
         get() = currentMyUser?.accountMap?.let { it["id"] as Long } ?: -1
