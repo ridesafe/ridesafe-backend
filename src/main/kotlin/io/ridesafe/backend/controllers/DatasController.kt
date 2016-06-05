@@ -40,6 +40,7 @@ class DatasController : MyController() {
 
     @RequestMapping(method = arrayOf(RequestMethod.POST))
     fun save(@RequestBody @Valid datas: List<ProvidedData>): Map<String, String> {
+        res?.status = CREATED
         dataService?.create(datas)
         return mapOf("result" to "ok")
     }
