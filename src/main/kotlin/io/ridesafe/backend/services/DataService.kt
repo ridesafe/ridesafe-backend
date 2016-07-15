@@ -27,6 +27,7 @@ import io.ridesafe.backend.security.services.AuthenticationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cassandra.core.AsynchronousQueryListener
+import org.springframework.cassandra.core.WriteOptions
 import org.springframework.data.cassandra.core.CassandraTemplate
 import org.springframework.data.cassandra.core.WriteListener
 import org.springframework.stereotype.Service
@@ -56,8 +57,10 @@ class DataService @Autowired constructor(val cassandraTemplate: CassandraTemplat
         }
     }
 
+    private val writeOptions = WriteOptions().apply { ttl = 2419200 } // 86400 * 7 * 4 (4 semaines)
+
     fun create(data: ProvidedData?): ProvidedData? {
-        cassandraTemplate.insertAsynchronously(data?.toUserData(authenticationService.currentUserId, req.getDeviceId()), writeListener)
+        cassandraTemplate.insertAsynchronously(data?.toUserData(authenticationService.currentUserId, req.getDeviceId()), writeListener, writeOptions)
         return data
     }
 
@@ -69,7 +72,7 @@ class DataService @Autowired constructor(val cassandraTemplate: CassandraTemplat
 
         // convert large list to sublist to batch them
         datas.asSequence().collate(100).forEach {
-            cassandraTemplate.insertAsynchronously(it.toUserDatas(authenticationService.currentUserId, req.getDeviceId()), writeListener)
+            cassandraTemplate.insertAsynchronously(it.toUserDatas(authenticationService.currentUserId, req.getDeviceId()), writeListener, writeOptions)
         }
 
         return datas
