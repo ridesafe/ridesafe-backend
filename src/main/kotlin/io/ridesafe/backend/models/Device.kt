@@ -20,10 +20,7 @@
 package io.ridesafe.backend.models
 
 import org.springframework.data.annotation.Transient
-import org.springframework.data.cassandra.mapping.PrimaryKey
-import org.springframework.data.cassandra.mapping.PrimaryKeyClass
-import org.springframework.data.cassandra.mapping.PrimaryKeyColumn
-import org.springframework.data.cassandra.mapping.Table
+import org.springframework.data.cassandra.mapping.*
 
 /**
  * Created by evoxmusic on 11/09/16.
@@ -45,10 +42,13 @@ data class Device(@Transient val userId: Long,
     @PrimaryKey(DeviceField.DEVICE_KEY)
     val deviceKey = DeviceKey(userId, deviceId)
 
+    @Column(DeviceField.TIMESTAMP)
+    val timestamp = System.currentTimeMillis()
+
 }
 
 @PrimaryKeyClass
 data class DeviceKey(
-        @PrimaryKeyColumn(ordinal = 1, type = PrimaryKeyType.PARTITIONED) val user_id: Long,
-        @PrimaryKeyColumn(ordinal = 2, type = PrimaryKeyType.CLUSTERED) val device_id: String
+        @PrimaryKeyColumn(ordinal = 1, type = org.springframework.cassandra.core.PrimaryKeyType.PARTITIONED) val user_id: Long,
+        @PrimaryKeyColumn(ordinal = 2, type = org.springframework.cassandra.core.PrimaryKeyType.CLUSTERED) val device_id: String
 )
