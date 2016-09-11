@@ -21,6 +21,7 @@ package io.ridesafe.backend.models
 
 import org.springframework.data.annotation.Transient
 import org.springframework.data.cassandra.mapping.*
+import java.io.Serializable
 
 /**
  * Created by evoxmusic on 11/09/16.
@@ -51,4 +52,4 @@ data class Device(@Transient val userId: Long,
 data class DeviceKey(
         @PrimaryKeyColumn(ordinal = 1, type = org.springframework.cassandra.core.PrimaryKeyType.PARTITIONED) val user_id: Long,
         @PrimaryKeyColumn(ordinal = 2, type = org.springframework.cassandra.core.PrimaryKeyType.CLUSTERED) val device_id: String
-)
+) : Serializable
