@@ -23,3 +23,10 @@ CREATE INDEX data_activity_type_idx ON data (activity_type);
 CREATE INDEX data_bike_type_idx ON data (bike_type);
 CREATE INDEX data_road_type_idx ON data (road_type);
 CREATE INDEX data_road_condition_idx ON data (road_condition);
+
+CREATE COLUMNFAMILY device (
+user_id bigint,
+device_id text,
+"timestamp" bigint,
+PRIMARY KEY ((user_id), device_id)
+);
