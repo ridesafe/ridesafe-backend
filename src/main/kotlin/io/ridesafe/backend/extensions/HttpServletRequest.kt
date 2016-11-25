@@ -19,9 +19,18 @@
 
 package io.ridesafe.backend.extensions
 
+import io.ridesafe.backend.models.Device
 import javax.servlet.http.HttpServletRequest
 
 /**
  * Created by evoxmusic on 17/04/16.
  */
-fun HttpServletRequest.getDeviceId() = this.getHeader("Device-Id")
+fun HttpServletRequest.getDeviceId(): String = this.getHeader("Device-Id")
+
+fun HttpServletRequest.getDeviceBrand(): String? = this.getHeader("Device-Brand")
+
+fun HttpServletRequest.getDeviceModel(): String? = this.getHeader("Device-Model")
+
+fun HttpServletRequest.getDeviceRawModel(): String? = this.getHeader("Device-Raw-Model")
+
+fun HttpServletRequest.getDevice(userId: Long): Device = Device(userId, getDeviceId(), getDeviceBrand(), getDeviceModel(), getDeviceRawModel())

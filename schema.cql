@@ -27,6 +27,9 @@ CREATE INDEX data_road_condition_idx ON data (road_condition);
 CREATE COLUMNFAMILY device (
 user_id bigint,
 device_id text,
+device_brand text,
+device_model text,
+device_raw_model text,
 "timestamp" bigint,
 PRIMARY KEY ((user_id), device_id)
 );

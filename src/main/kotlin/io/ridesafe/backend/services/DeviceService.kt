@@ -19,7 +19,7 @@
 
 package io.ridesafe.backend.services
 
-import io.ridesafe.backend.extensions.getDeviceId
+import io.ridesafe.backend.extensions.getDevice
 import io.ridesafe.backend.extensions.lazyLogger
 import io.ridesafe.backend.models.Device
 import io.ridesafe.backend.security.services.AuthenticationService
@@ -54,9 +54,7 @@ class DeviceService @Autowired constructor(val cassandraTemplate: CassandraTempl
         }
     }
 
-    fun create() = create(Device(authenticationService.currentUserId, req.getDeviceId()))
-
-    fun create(device: Device): Device {
+    fun create(device: Device = req.getDevice(authenticationService.currentUserId)): Device {
 
         log.debug("Insert device: $device")
         cassandraTemplate.insertAsynchronously(device, writeListener)
