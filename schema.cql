@@ -34,5 +34,5 @@ device_brand text,
 device_model text,
 device_raw_model text,
 "timestamp" bigint,
-PRIMARY KEY ((user_id), device_id)
+PRIMARY KEY ((user_id), device_id, key)
 );
