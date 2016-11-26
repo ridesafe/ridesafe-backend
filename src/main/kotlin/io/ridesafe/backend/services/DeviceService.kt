@@ -19,24 +19,19 @@
 
 package io.ridesafe.backend.services
 
-import io.ridesafe.backend.extensions.getDevice
 import io.ridesafe.backend.extensions.lazyLogger
 import io.ridesafe.backend.models.Device
-import io.ridesafe.backend.security.services.AuthenticationService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.cassandra.core.CassandraTemplate
 import org.springframework.data.cassandra.core.WriteListener
 import org.springframework.stereotype.Service
-import javax.servlet.http.HttpServletRequest
 
 /**
  * Created by evoxmusic on 11/09/16.
  */
 @Service
-class DeviceService @Autowired constructor(val cassandraTemplate: CassandraTemplate,
-                                           val authenticationService: AuthenticationService,
-                                           val req: HttpServletRequest) {
+class DeviceService @Autowired constructor(val cassandraTemplate: CassandraTemplate) {
 
     val log by lazyLogger()
 
@@ -54,7 +49,7 @@ class DeviceService @Autowired constructor(val cassandraTemplate: CassandraTempl
         }
     }
 
-    fun create(device: Device = req.getDevice(authenticationService.currentUserId)): Device {
+    fun create(device: Device): Device {
 
         log.debug("Insert device: $device")
         cassandraTemplate.insertAsynchronously(device, writeListener)

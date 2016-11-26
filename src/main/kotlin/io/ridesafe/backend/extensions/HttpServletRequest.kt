@@ -33,4 +33,4 @@ fun HttpServletRequest.getDeviceModel(): String? = this.getHeader("Device-Model"
 
 fun HttpServletRequest.getDeviceRawModel(): String? = this.getHeader("Device-Raw-Model")
 
-fun HttpServletRequest.getDevice(userId: Long): Device = Device(userId, getDeviceId(), getDeviceBrand(), getDeviceModel(), getDeviceRawModel())
+fun HttpServletRequest.getDevice(userId: Long, key: String? = null): Device = Device(userId, getDeviceId(), key, getDeviceBrand(), getDeviceModel(), getDeviceRawModel())

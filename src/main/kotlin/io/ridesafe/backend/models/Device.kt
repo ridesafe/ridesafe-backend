@@ -32,6 +32,7 @@ object DeviceField {
     const val DEVICE_KEY = "device_key"
     const val USER_ID = "user_id"
     const val DEVICE_ID = "device_id"
+    const val KEY = "key"
     const val DEVICE_BRAND = "device_brand"
     const val DEVICE_MODEL = "device_model"
     const val DEVICE_RAW_MODEL = "device_raw_model"
@@ -42,6 +43,7 @@ object DeviceField {
 @Table("device")
 data class Device(@Transient val userId: Long,
                   @Transient val deviceId: String,
+                  @Column(DeviceField.KEY) val key: String? = null,
                   @Column(DeviceField.DEVICE_BRAND) val deviceBrand: String? = null,
                   @Column(DeviceField.DEVICE_MODEL) val deviceModel: String? = null,
                   @Column(DeviceField.DEVICE_RAW_MODEL) val deviceRawModel: String? = null) {

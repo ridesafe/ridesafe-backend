@@ -5,6 +5,7 @@ use ridesafe;
 CREATE COLUMNFAMILY data (
 device_id text,
 user_id bigint,
+key text,
 "timestamp" bigint,
 acc_x decimal,
 acc_y decimal,
@@ -23,10 +24,12 @@ CREATE INDEX data_activity_type_idx ON data (activity_type);
 CREATE INDEX data_bike_type_idx ON data (bike_type);
 CREATE INDEX data_road_type_idx ON data (road_type);
 CREATE INDEX data_road_condition_idx ON data (road_condition);
+CREATE INDEX data_key_idx ON data (key);
 
 CREATE COLUMNFAMILY device (
 user_id bigint,
 device_id text,
+key text,
 device_brand text,
 device_model text,
 device_raw_model text,

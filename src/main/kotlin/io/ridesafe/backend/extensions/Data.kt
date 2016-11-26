@@ -27,4 +27,4 @@ import io.ridesafe.backend.models.UserData
  */
 fun Data?.toUserData(userId: Long = -1, deviceId: String) = this?.let { UserData(userId, deviceId, it) }
 
-fun List<Data?>?.toUserDatas(userId: Long = -1, deviceId: String) = this?.map { e -> e?.let { it.toUserData(userId, deviceId) } }
+fun List<Data?>?.toUserDatas(userId: Long = -1, deviceId: String) = this?.map { e -> e?.toUserData(userId, deviceId) }

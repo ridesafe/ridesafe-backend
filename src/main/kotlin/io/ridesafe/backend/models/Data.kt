@@ -32,6 +32,7 @@ object DataField {
     val TIMESTAMP = "timestamp"
     val USER_ID = "user_id"
     val DEVICE_ID = "device_id"
+    val KEY = "key"
     val ACTIVITY_TYPE = "activity_type"
     val ROAD_CONDITION = "road_condition"
     val ROAD_TYPE = "road_type"
@@ -47,6 +48,7 @@ object DataField {
 interface Data {
 
     val timestamp: Long
+    val key: String?
     val accX: Float
     val accY: Float
     val accZ: Float
@@ -59,6 +61,7 @@ interface Data {
 class ProvidedData : Data, Rest {
 
     override var timestamp: Long = 0L
+    override var key: String? = null
     override var accX: Float = 0f
     override var accY: Float = 0f
     override var accZ: Float = 0f
@@ -78,8 +81,9 @@ class ProvidedData : Data, Rest {
     }
 
     @Transient
-    override fun getPropertiesMap(): Map<String, Any> = mapOf(
+    override fun getPropertiesMap(): Map<String, Any?> = mapOf(
             "timestamp" to timestamp,
+            "key" to key,
             "acc_x" to accX,
             "acc_y" to accY,
             "acc_z" to accZ,
@@ -123,6 +127,9 @@ class UserData : Data {
     @NotNull
     @Column("gyr_z")
     override var gyrZ: Float = 0f
+
+    @Column("key")
+    override var key: String? = null
 
     @Column("activity_type")
     private var mActivityType: String? = ""
@@ -173,6 +180,7 @@ class UserData : Data {
             val ua = UserData(
                     row.getLong(DataField.USER_ID),
                     row.getString(DataField.DEVICE_ID),
+                    row.getString(DataField.KEY),
                     row.getLong(DataField.TIMESTAMP),
                     row.getDecimal(DataField.accX).toFloat(),
                     row.getDecimal(DataField.accY).toFloat(),
@@ -198,15 +206,16 @@ class UserData : Data {
         // empty
     }
 
-    constructor(userId: Long = -1, deviceId: String, data: Data) : this(userId, deviceId, data.timestamp,
+    constructor(userId: Long = -1, deviceId: String, data: Data) : this(userId, deviceId, data.key, data.timestamp,
             data.accX, data.accY, data.accZ,
             data.gyrX, data.gyrY, data.gyrZ)
 
-    constructor(userId: Long = -1, deviceId: String, timestamp: Long,
+    constructor(userId: Long = -1, deviceId: String, key: String?, timestamp: Long,
                 accX: Float, accY: Float, accZ: Float,
                 gyrX: Float, gyrY: Float, gyrZ: Float) {
 
         this.timestamp = timestamp
+        this.key = key
         this.accX = accX
         this.accY = accY
         this.accZ = accZ
